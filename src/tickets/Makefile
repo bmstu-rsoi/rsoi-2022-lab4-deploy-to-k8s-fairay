@@ -14,6 +14,10 @@ test: mockery logs
 run: build
 	.\temp\tickets.exe
 
+docker-push:
+	docker build --no-cache -t fairay/rsoi-lab4-tickets .
+	docker push fairay/rsoi-lab4-tickets:latest
+
 # Creating directories
 DIRS?=logs temp
 $(DIRS):
