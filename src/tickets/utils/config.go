@@ -29,7 +29,7 @@ func InitConfig() {
 			"tickets",
 			"program",
 			"test",
-			"postgres",
+			"postgres-service",
 			"5432",
 		},
 		"logs/server.log",
