@@ -17,7 +17,14 @@ jobs:
 
       - uses: docker/setup-buildx-action@v2
 
-      # TODO build, publish to docker hub
+      - name: Build
+        run: |
+          cd src/gateway && go get -d ./... && go build ./...
+          cd src/flights && go get -d ./... && go build ./...
+          cd src/tickets && go get -d ./... && go build ./...
+          cd src/privileges && go get -d ./... && go build ./...
+
+      # TODO publish to docker hub
 
       - name: Deploy k8s
         run: |
