@@ -26,7 +26,32 @@ jobs:
       - name: Build privileges
         run: cd src/privileges && go get -d ./... && go build ./...
 
-      # TODO publish to docker hub
+      - name: Docker hub auth
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_LOGIN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Publish gateway image
+        run: |
+          cd ./src/gateway
+          docker build --no-cache -t fairay/rsoi-lab4-gateway .
+          docker push fairay/rsoi-lab4-gateway:latest
+      - name: Publish flights image
+        run: |
+          cd ./src/flights
+          docker build --no-cache -t fairay/rsoi-lab4-flights .
+          docker push fairay/rsoi-lab4-flights:latest
+      - name: Publish tickets image
+        run: |
+          cd ./src/tickets
+          docker build --no-cache -t fairay/rsoi-lab4-tickets .
+          docker push fairay/rsoi-lab4-tickets:latest
+      - name: Publish privileges image
+        run: |
+          cd ./src/privileges
+          docker build --no-cache -t fairay/rsoi-lab4-privileges .
+          docker push fairay/rsoi-lab4-privileges:latest
 
       - name: Deploy k8s
         run: |
